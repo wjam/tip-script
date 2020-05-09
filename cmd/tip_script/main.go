@@ -35,20 +35,20 @@ func main() {
 }
 
 func handleInput(input string) ([]response, error) {
-	// how does http.HandleFunc do it?
 	if cidrRegex.MatchString(input) {
-		response, err := handleRegex(input)
+		response, err := handleCidr(input)
 		if err != nil {
 			log.Printf("Failed to parse CIDR: %v", err)
-		}
-		if err == nil {
+		} else {
 			return response, nil
 		}
 	}
 
 	if epochNumber.MatchString(input) {
 		response, err := handleEpoch(input)
-		if err == nil {
+		if err != nil {
+			log.Printf("Failed to parse epoch number: %v", err)
+		} else {
 			return response, nil
 		}
 	}
@@ -56,7 +56,7 @@ func handleInput(input string) ([]response, error) {
 	return []response{}, nil
 }
 
-func handleRegex(input string) ([]response, error) {
+func handleCidr(input string) ([]response, error) {
 	_, c, err := net.ParseCIDR(input)
 	if err != nil {
 		return nil, err
@@ -93,7 +93,7 @@ func handleEpoch(input string) ([]response, error) {
 		t = time.Unix(0, i)
 	}
 
-	return []response{text(t.String())}, nil
+	return []response{text(t.UTC().String())}, nil
 }
 
 func text(text string) response {

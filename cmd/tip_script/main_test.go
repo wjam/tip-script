@@ -21,19 +21,17 @@ func TestHandleInput(t *testing.T) {
 		},
 		{
 			"1351700038",
-			[]response{{"text", "2012-10-31 16:13:58 +0000 GMT", ""}},
+			[]response{{"text", "2012-10-31 16:13:58 +0000 UTC", ""}},
 		},
 		{
 			"1351700038292",
-			[]response{{"text", "2012-10-31 16:13:58.292 +0000 GMT", ""}},
+			[]response{{"text", "2012-10-31 16:13:58.292 +0000 UTC", ""}},
 		},
 		{
 			"1351700038292387000",
-			[]response{{"text", "2012-10-31 16:13:58.292387 +0000 GMT", ""}},
+			[]response{{"text", "2012-10-31 16:13:58.292387 +0000 UTC", ""}},
 		},
 	}
-
-	// 64071776989000 -> Tuesday, 9 May 4000 12:49:49 GMT+01:00 ?
 
 	for _, test := range tests {
 		t.Run(test.input, func(t *testing.T) {
