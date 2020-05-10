@@ -18,7 +18,7 @@ type handler interface {
 	handle(input string) ([]response, error)
 }
 
-var handlers = []handler{&cidrHandler{}, &epochHandler{}}
+var handlers = []handler{&cidrHandler{}, &epochHandler{}, &jiraHandler{"https://example.com/browse"}}
 
 func main() {
 	responses, err := handleInput(os.Args[1])

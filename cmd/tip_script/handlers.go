@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net"
+	"net/url"
 	"regexp"
 	"strconv"
 	"strings"
@@ -76,4 +77,29 @@ func (_ *epochHandler) handle(input string) ([]response, error) {
 	}
 
 	return []response{text(t.UTC().String())}, nil
+}
+
+var _ handler = &jiraHandler{}
+
+type jiraHandler struct {
+	url string
+}
+
+func (j *jiraHandler) regex() *regexp.Regexp {
+	return regexp.MustCompile("^[A-Z]{3,4}-\\d+$")
+}
+
+func (j *jiraHandler) handle(input string) ([]response, error) {
+	base, err := url.Parse(j.url)
+	if err != nil {
+		return nil, err
+	}
+
+	if !strings.HasSuffix(base.Path, "/") {
+		base.Path += "/"
+	}
+
+	base.Path += input
+
+	return []response{link(fmt.Sprintf("%s JIRA", base.Hostname()), base.String())}, nil
 }

@@ -47,6 +47,10 @@ func TestHandleInput(t *testing.T) {
 			"1351700038292387000",
 			[]response{{"text", "2012-10-31 16:13:58.292387 +0000 UTC", ""}},
 		},
+		{
+			"DEV-1234",
+			[]response{{"url", "https://example.com/browse/DEV-1234", "example.com JIRA"}},
+		},
 	}
 
 	for _, test := range tests {
